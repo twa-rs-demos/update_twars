@@ -39,7 +39,9 @@ update_paper_api () {
 	echo "update paper api"
 	cd "$twars/paper-api" || exit 1
 	git pull -r
-	./gradlew clean flywayclean flywaymigrate
+	./gradlew clean 
+	./gradlew flywayclean 
+	./gradlew flywaymigrate
 	./gradlew jettyRestart || nohup ./gradlew jettyStart > /dev/null &
 }
 
