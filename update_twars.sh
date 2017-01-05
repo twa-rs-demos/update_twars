@@ -11,8 +11,7 @@ set -x
 #				4. paper-api
 #
 #=========================================================================
-
-twars='/home/afaren/twars'	# path of Recruiting System, change it in your own computer
+twars="$1"
 web_api_port=3000
 
 
