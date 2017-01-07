@@ -1,6 +1,5 @@
 #! /usr/bin/env  bash 
 
-set -x
 
 #=========================================================================
 #
@@ -64,5 +63,17 @@ update_twars () {
 	update_web_api
 }
 
+validate () {
+	if [[ ! -d $twars ]]; then
+		echo 
+		echo "Abort! You need to input a validate directory of Recruiting System"
+		echo "For instance, ./update_twars.sh /home/afaren/recruiting-system"
+		echo 
+		exit 1 
+	fi	
+}
+
+validate
 update_twars
+
 
