@@ -56,7 +56,7 @@ update_web_service () {
 	update_paper_api
 }
 
-update_twars () {
+update () {
 	update_web 
 	update_teacher_admin_web
 	update_paper_api
@@ -74,6 +74,6 @@ validate () {
 }
 
 validate
-update_twars
+update
 
 
