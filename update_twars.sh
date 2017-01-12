@@ -11,8 +11,6 @@
 #
 #=========================================================================
 twars="$1"
-web_api_port=3000
-
 
 update_web () {
 	echo "update web"
@@ -27,26 +25,24 @@ update_teacher_admin_web () {
 update_web_api () {
 	echo "update web api"
 	cd "$twars/web-api" || exit 1
-	git pull -r
+	git pull origin master --rebase
 	npm install 
 	npm run refreshMongo
-	kill $(lsof -t -i:$web_api_port)
-	nohup npm start > /dev/null &
 }
 
 update_paper_api () {
 	echo "update paper api"
 	cd "$twars/paper-api" || exit 1
-	git pull -r
+	git pull origin master --rebase
 	./gradlew clean 
 	./gradlew flywayclean 
 	./gradlew flywaymigrate
-	./gradlew jettyRestart || nohup ./gradlew jettyStart > /dev/null &
+	./gradlew war
 }
 
 update_static_file () {
 	cd "$1" || exit 1
-	git pull -r
+	git pull origin master --rebase
 	npm install 
 	npm run webpack
 }
@@ -73,7 +69,23 @@ validate () {
 	fi	
 }
 
+stop_services () {
+	echo '---------------------------stop services----------------------------------'
+	cd "$twars/assembly" || exit 1
+	docker-compose -f docker-compose.yml kill
+
+}
+
+start_services () {
+	echo '---------------------------stop services----------------------------------'
+	cd "$twars/assembly" || exit 1
+	docker-compose -f docker-compose.yml up -d web-api paper-api mongo mysql
+}
+
+
 validate
 update
+stop_services
+start_services
 
 
