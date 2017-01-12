@@ -12,6 +12,10 @@
 #=========================================================================
 twars="$1"
 
+update_git_repo () {
+	git pull --rebase
+}
+
 update_web () {
 	echo "update web"
 	update_static_file "$twars/web"
@@ -25,7 +29,7 @@ update_teacher_admin_web () {
 update_web_api () {
 	echo "update web api"
 	cd "$twars/web-api" || exit 1
-	git pull origin master --rebase
+	update_git_repo
 	npm install 
 	npm run refreshMongo
 }
@@ -33,7 +37,7 @@ update_web_api () {
 update_paper_api () {
 	echo "update paper api"
 	cd "$twars/paper-api" || exit 1
-	git pull origin master --rebase
+	update_git_repo
 	./gradlew clean 
 	./gradlew flywayclean 
 	./gradlew flywaymigrate
@@ -42,7 +46,7 @@ update_paper_api () {
 
 update_static_file () {
 	cd "$1" || exit 1
-	git pull origin master --rebase
+	update_git_repo
 	npm install 
 	npm run webpack
 }
