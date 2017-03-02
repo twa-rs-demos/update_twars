@@ -66,7 +66,7 @@ update () {
 validate () {
 	if [[ ! -d $twars ]]; then
 		echo 
-		echo "Abort! You need to input a validate directory of Recruiting System"
+		echo "Abort! You need to input a validate path to Recruiting System"
 		echo "For instance, ./update_twars.sh /home/afaren/recruiting-system"
 		echo 
 		exit 1 
